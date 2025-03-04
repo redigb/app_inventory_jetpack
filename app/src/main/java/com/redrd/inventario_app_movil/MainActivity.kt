@@ -33,16 +33,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
-import com.redrd.inventario_app_movil.intefaz.navegacion.GraficoNavegacion
-import com.redrd.inventario_app_movil.intefaz.navegacion.NavegacionBotton
+import com.redrd.inventario_app_movil.interfaz.navegacion.GraficoNavegacion
+import com.redrd.inventario_app_movil.interfaz.navegacion.NavegacionBotton
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            // InventoryScreen()
-            MyApp()
+             //InventoryScreen()
+           MyApp()
         }
     }
 }
@@ -152,52 +152,3 @@ fun TabButton(label: String, selectedTab: String, onSelect: (String) -> Unit) {
         Text(label, color = if (selectedTab == label) Color.White else Color.Black)
     }
 }
-
-/*@Composable
-fun InventoryScreen() {
-    var selectedTab = remember { mutableStateOf("INCOMING") }
-    val items = listOf("Laptop", "Mouse", "Keyboard", "Monitor")
-
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        // Tab Selector
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-            Button(onClick = { selectedTab.value = "INCOMING" }, colors = ButtonDefaults.buttonColors(if (selectedTab.value == "INCOMING") Color.Blue else Color.Gray)) {
-                Text("INCOMING", color = Color.White)
-            }
-            Button(onClick = { selectedTab.value = "OUTCOMING" }, colors = ButtonDefaults.buttonColors(if (selectedTab.value == "OUTCOMING") Color.Blue else Color.Gray)) {
-                Text("OUTCOMING", color = Color.White)
-            }
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Buttons
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            Button(onClick = {}, modifier = Modifier.weight(1f).padding(4.dp)) {
-                Text("IMPORT FROM EXCEL")
-            }
-            Button(onClick = {}, modifier = Modifier.weight(1f).padding(4.dp)) {
-                Text("EXPORT FROM EXCEL")
-            }
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
-            itemsIndexed(items) { index, item -> // Usamos itemsIndexed para obtener el índice y el item
-                Card(
-                    modifier = Modifier.fillMaxWidth().padding(8.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White)
-                ) {
-                    Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text(text = "#$index - $item", fontSize = 18.sp, fontWeight = FontWeight.Bold) // Mostramos el índice
-                            Text(text = "Available", fontSize = 14.sp, color = Color.Gray)
-                        }
-                        Button(onClick = {}, modifier = Modifier.padding(4.dp)) {
-                            Text("Details")
-                        }
-                    }
-                }
-            }
-        }
-    }
-}*/

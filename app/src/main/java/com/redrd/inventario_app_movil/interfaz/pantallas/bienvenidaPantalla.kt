@@ -1,4 +1,4 @@
-package com.redrd.inventario_app_movil.intefaz.pantallas
+package com.redrd.inventario_app_movil.interfaz.pantallas
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,7 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.redrd.inventario_app_movil.intefaz.navegacion.Pantallas
+import com.redrd.inventario_app_movil.interfaz.navegacion.Pantallas
+import com.redrd.inventario_app_movil.vistaModelo.InventarioVistaModel
 import kotlinx.coroutines.delay
 
 @Composable
@@ -24,5 +25,12 @@ fun BienvenidaPantalla(navController: NavController) {
         contentAlignment = Alignment.Center
     ) {
         Text(text = "StockFlow", fontSize = 32.sp, fontWeight = FontWeight.Bold)
+
+        Text(text = "Bienvenido al\n" +
+                "\n" +
+                "Aplicativo,\n" +
+                "\n" +
+                "de Inventariado", fontSize = 32.sp, fontWeight = FontWeight.ExtraLight)
+
     }
 }

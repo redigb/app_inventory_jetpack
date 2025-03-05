@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.storage)
     implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.animation.core.android)
 
 
     testImplementation(libs.junit)

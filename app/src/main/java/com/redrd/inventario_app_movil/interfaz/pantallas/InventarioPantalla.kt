@@ -1,7 +1,10 @@
 package com.redrd.inventario_app_movil.interfaz.pantallas
 
-import android.app.Application
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,89 +15,95 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.redrd.inventario_app_movil.R
+import com.redrd.inventario_app_movil.data.Producto
+import com.redrd.inventario_app_movil.data.entidades.Artefacto
+import com.redrd.inventario_app_movil.data.entidades.Vehiculo
+import com.redrd.inventario_app_movil.interfaz.componentes.BotonEstilo
+import com.redrd.inventario_app_movil.interfaz.componentes.BotonGeneral
 import com.redrd.inventario_app_movil.interfaz.navegacion.Pantallas
-import com.redrd.inventario_app_movil.vistaModelo.InventarioViewModelFactory
 import com.redrd.inventario_app_movil.vistaModelo.InventarioVistaModel
 
 @Composable
 fun InventarioPantalla(navController: NavController, viewModel: InventarioVistaModel) {
-
-   /// val context = LocalContext.current.applicationContext as Application
-   /// val viewModel: InventarioVistaModel = viewModel(factory = InventarioViewModelFactory(context))
 
     val artefactosState = viewModel.artefactos.observeAsState(emptyList())
     val vehiculosState = viewModel.vehiculos.observeAsState(emptyList())
 
     val artefactos = artefactosState.value
     val vehiculos = vehiculosState.value
+    val productos = obtenerProductosUnificados(artefactos, vehiculos)
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
-            .verticalScroll(rememberScrollState()) // 🔹 Permite desplazamiento si el contenido es muy grande
     ) {
         Text(
             text = "Inventario",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = 8.dp)
         )
+        HorizontalDivider(
+            color = Color.Gray.copy(alpha = 0.2f),
+            thickness = 2.dp,
+            modifier = Modifier.fillMaxWidth()
+        )
+
 
         // Sección de Artefactos
-        Text(
-            text = "Artefactos",
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Medium,
-            modifier = Modifier.padding(vertical = 8.dp)
-        )
-        artefactos.forEach { item ->
-            ProductoCard(item.nombre, item.cantidad)
+
+
+
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2), // 🔹 Organiza en dos columnas
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f) // 🔹 Ocupa el espacio disponible sin empujar los botones fuera
+        ){
+            itemsIndexed(productos) { index, producto ->
+                ProductoCard(producto)
+            }
         }
 
-        // Sección de Vehículos
-        Text(
-            text = "Vehículos",
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Medium,
-            modifier = Modifier.padding(vertical = 8.dp)
-        )
-        vehiculos.forEach { item ->
-            ProductoCard(item.nombre, item.cantidad)
-        }
 
-        // Botones para agregar elementos
+
         Spacer(modifier = Modifier.height(16.dp)) // 🔹 Agrega espacio antes de los botones
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            BotonAgregar("Añadir Artefacto") {
+            BotonGeneral(texto = "Añadir Artefacto", estilo = BotonEstilo.OUTLINE){
                 navController.navigate(Pantallas.RegistroArtefacto.ruta)
             }
-
         }
 
         Row(
@@ -102,7 +111,7 @@ fun InventarioPantalla(navController: NavController, viewModel: InventarioVistaM
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
 
-            BotonAgregar("Añadir Vehículo") {
+            BotonGeneral(texto = "Añadir Vehículo", estilo = BotonEstilo.BLACK,){
                 navController.navigate(Pantallas.RegistroVehiculo.ruta)
             }
         }
@@ -111,43 +120,73 @@ fun InventarioPantalla(navController: NavController, viewModel: InventarioVistaM
 }
 
 @Composable
-fun ProductoCard(nombre: String, stock: Int) {
+fun ProductoCard(producto: Producto) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        elevation = CardDefaults.elevatedCardElevation(4.dp),
         shape = RoundedCornerShape(8.dp)
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector = Icons.Default.ShoppingCart, // Puedes cambiar el icono según el tipo
-                contentDescription = "Icono de producto",
-                modifier = Modifier.size(50.dp)
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(
+                text = if (producto is Producto.ArtefactoProducto) "Artefacto" else "Vehiculo",
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.background(Color.LightGray).padding(4.dp)
             )
-            Spacer(modifier = Modifier.width(8.dp))
-            Column {
-                Text(text = nombre, fontWeight = FontWeight.Bold)
-                Text(text = "Stock: $stock unidades", color = Color.Gray)
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Image(
+                painter = painterResource(id = R.drawable.placeholder),
+                contentDescription = "Imagen del producto",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp)
+                    .clip(RoundedCornerShape(8.dp))
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(text = producto.nombre, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+            Text(text = "In stock: ${producto.cantidad} units", fontSize = 14.sp, color = Color.Gray)
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(text = "🛒")
+                Text(text = "📦")
+                Text(text = "📊")
             }
         }
     }
 }
 
-
 @Composable
-fun BotonAgregar(texto: String, onClick: () -> Unit) {
-    Row(modifier = Modifier.fillMaxWidth()) {
-        Button(
-            onClick = onClick,
-            modifier = Modifier.weight(1f)
-        ) {
-            Text(texto)
+fun obtenerProductosUnificados(
+    artefactos: List<Artefacto>,
+    vehiculos: List<Vehiculo>
+): List<Producto> {
+    return remember(artefactos, vehiculos) {
+        val artefactosMapped = artefactos.map { artefacto ->
+            Producto.ArtefactoProducto(
+                id = artefacto.id,
+                nombre = artefacto.nombre,
+                cantidad = artefacto.cantidad,
+                imagen = artefacto.imagen
+            )
         }
+        val vehiculosMapped = vehiculos.map { vehiculo ->
+            Producto.VehiculoProducto(
+                id = vehiculo.id,
+                nombre = vehiculo.nombre,
+                cantidad = vehiculo.cantidad,
+                imagen = vehiculo.imagen
+            )
+        }
+        artefactosMapped + vehiculosMapped
     }
 }
+
+
+

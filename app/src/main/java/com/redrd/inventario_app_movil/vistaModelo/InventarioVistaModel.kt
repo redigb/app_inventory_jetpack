@@ -30,4 +30,6 @@ class InventarioVistaModel(application: Application) : AndroidViewModel(applicat
     fun agregarVehiculo(vehiculo: Vehiculo) = viewModelScope.launch {
         repository.agregarVehiculo(vehiculo)
     }
+
+
 }

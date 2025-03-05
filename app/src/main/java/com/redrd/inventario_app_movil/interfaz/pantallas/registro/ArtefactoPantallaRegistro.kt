@@ -1,7 +1,6 @@
 package com.redrd.inventario_app_movil.interfaz.pantallas.registro
 
 import android.widget.Toast
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,11 +10,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -26,19 +23,27 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.redrd.inventario_app_movil.interfaz.navegacion.Pantallas
+import com.redrd.inventario_app_movil.data.entidades.Artefacto
+import com.redrd.inventario_app_movil.interfaz.componentes.BotonEstilo
+import com.redrd.inventario_app_movil.interfaz.componentes.BotonGeneral
 import com.redrd.inventario_app_movil.vistaModelo.InventarioVistaModel
-import kotlinx.coroutines.delay
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun registroArtefacto(navController: NavController, viewModel: InventarioVistaModel) {
 
-    /*var nombre = remember { mutableStateOf("") }
+    var nombre = remember { mutableStateOf("") }
     var codigo = remember { mutableStateOf("") }
     var descripcion = remember { mutableStateOf("") }
     var precioVenta = remember { mutableStateOf("") }
     var cantidad = remember { mutableStateOf("") }
-    var fechaIngreso = remember { mutableStateOf("") }
+
+    val formatoFecha = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    val fechaActual = formatoFecha.format(Date()) // Obtener la fecha actual formateada
+    val fechaIngreso = remember { mutableStateOf(fechaActual) }
+
     var imagen = remember { mutableStateOf("") }
 
     val contexto = LocalContext.current
@@ -52,7 +57,7 @@ fun registroArtefacto(navController: NavController, viewModel: InventarioVistaMo
     ) {
         Text(
             text = "Registrar Artefacto",
-            fontSize = 24.sp,
+            fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -118,37 +123,24 @@ fun registroArtefacto(navController: NavController, viewModel: InventarioVistaMo
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(
-            onClick = {
-                if (nombre.isNotBlank() && codigo.isNotBlank() && precioVenta.isNotBlank() && cantidad.isNotBlank()) {
-                    val artefacto = Artefacto(
-                        nombre = nombre,
-                        codigo = codigo,
-                        descripcion = descripcion,
-                        precioVenta = precioVenta.toDouble(),
-                        cantidad = cantidad.toInt(),
-                        fechaIngreso = fechaIngreso,
-                        imagen = imagen.takeIf { it.isNotBlank() }
-                    )
+        BotonGeneral("Guardar Artefacto", BotonEstilo.BLACK){
+            if (nombre.value.isNotBlank() && codigo.value.isNotBlank() && precioVenta.value.isNotBlank() && cantidad.value.isNotBlank()) {
+                val artefacto = Artefacto(
+                    nombre = nombre.value,
+                    codigo = codigo.value,
+                    descripcion = descripcion.value,
+                    precioVenta = precioVenta.value.toDouble(),
+                    cantidad = cantidad.value.toInt(),
+                    fechaIngreso = fechaIngreso.value,
+                    imagen = imagen.value.takeIf { it.isNotBlank() }
+                )
 
-                    viewModel.agregarArtefacto(artefacto)
-                    Toast.makeText(contexto, "Artefacto registrado", Toast.LENGTH_SHORT).show()
-                    navController.popBackStack() // Vuelve a la pantalla anterior
-                } else {
-                    Toast.makeText(contexto, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show()
-                }
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Guardar Artefacto")
+                viewModel.agregarArtefacto(artefacto)
+                Toast.makeText(contexto, "Artefacto registrado", Toast.LENGTH_SHORT).show()
+                navController.popBackStack() // Vuelve a la pantalla anterior
+            } else {
+                Toast.makeText(contexto, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show()
+            }
         }
-    }*/
-
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(text = "Formulario de registro de Artefacto", fontSize = 32.sp, fontWeight = FontWeight.Bold)
-
     }
 }

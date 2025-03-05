@@ -36,7 +36,7 @@ fun GraficoNavegacion(navController: NavHostController, paddingValues: PaddingVa
 
         // Rutas principales
         composable(Pantallas.Inicio.ruta) { InventarioPantalla(navController, viewModel) }
-        // ---->  Ruta segundatia a la principal
+        // ---->  Ruta segundatia a la principal -- para registros
         composable(Pantallas.RegistroArtefacto.ruta) { registroArtefacto(navController, viewModel) }
         composable(Pantallas.RegistroVehiculo.ruta) { registroVehiculo(navController, viewModel) }
 

@@ -1,5 +1,6 @@
 package com.redrd.inventario_app_movil.data.entidades
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -9,8 +10,8 @@ data class Vehiculo(
     val nombre: String,
     val serieModelo: String,
     val descripcion: String,
-     val precioVenta: Double,
+    val precioVenta: Double,
     val cantidad: Int,
-     val fechaIngreso: String,
-     val imagen: String? = null
+    val fechaIngreso: String,
+    val imagen: String? = null
 )

@@ -1,6 +1,7 @@
 package com.redrd.inventario_app_movil
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -32,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.redrd.inventario_app_movil.interfaz.navegacion.GraficoNavegacion
 import com.redrd.inventario_app_movil.interfaz.navegacion.NavegacionBotton
@@ -40,6 +42,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        // Config - splash screen
+       installSplashScreen()
+
         setContent {
              //InventoryScreen()
            MyApp()

@@ -54,7 +54,6 @@ dependencies {
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.androidx.animation.core.android)
 
-
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -69,4 +68,5 @@ dependencies {
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
     kapt(libs.room.compiler) // Para anotaciones
+    implementation(libs.androidx.core.splashscreen)
 }

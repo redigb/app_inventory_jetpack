@@ -47,13 +47,11 @@ fun registroVehiculo(navController: NavController, viewModel: InventarioVistaMod
     var precioVenta = remember { mutableStateOf("") }
     var cantidad = remember { mutableStateOf("") }
 
-
     val formatoFecha = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
     val fechaActual = formatoFecha.format(Date()) // Obtener la fecha actual formateada
     val fechaIngreso = remember { mutableStateOf(fechaActual) }
 
     var imagen = remember { mutableStateOf("") }
-
     val contexto = LocalContext.current
 
     Column(

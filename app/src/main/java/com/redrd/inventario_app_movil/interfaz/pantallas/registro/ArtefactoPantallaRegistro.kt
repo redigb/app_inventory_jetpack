@@ -26,6 +26,7 @@ import androidx.navigation.NavController
 import com.redrd.inventario_app_movil.data.entidades.Artefacto
 import com.redrd.inventario_app_movil.interfaz.componentes.BotonEstilo
 import com.redrd.inventario_app_movil.interfaz.componentes.BotonGeneral
+import com.redrd.inventario_app_movil.interfaz.componentes.MyInput
 import com.redrd.inventario_app_movil.interfaz.componentes.TopBar
 import com.redrd.inventario_app_movil.interfaz.navegacion.Pantallas
 import com.redrd.inventario_app_movil.vistaModelo.InventarioVistaModel
@@ -60,6 +61,8 @@ fun registroArtefacto(navController: NavController, viewModel: InventarioVistaMo
         TopBar(title = "Registrar Artefacto", isClickable = true){
             navController.navigate(Pantallas.Inventario.ruta)
         }
+
+       // MyInput("Nombre", nombre, "nombre del artefacto")
 
         OutlinedTextField(
             value = nombre.value,

@@ -53,7 +53,7 @@ fun MyInput(
             modifier = Modifier.fillMaxWidth()
                 .height(45.dp),
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color.Black,  // Borde negro al hacer clic
+                focusedBorderColor = Color(0xFF363434),  // Borde negro al hacer clic
                 unfocusedBorderColor = Color.Gray  // Borde gris cuando no está enfocado
             )
         )
@@ -96,7 +96,7 @@ fun MyInputIcon(
                 .fillMaxWidth()
                 .height(45.dp),
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color.Black,  // Borde negro al hacer clic
+                focusedBorderColor = Color(0xFF363434),  // Borde negro al hacer clic
                 unfocusedBorderColor = Color.Gray  // Borde gris cuando no está enfocado
             ),
             trailingIcon = {

@@ -44,9 +44,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         // Config - splash screen
        installSplashScreen()
-
         setContent {
-             //InventoryScreen()
+            // InventoryScreen()
            MyApp()
         }
     }
@@ -62,7 +61,7 @@ fun MyApp() {
     }
 }
 
-@Preview
+//@Preview
 @Composable
 fun InventoryScreen() {
     var selectedTab = remember { mutableStateOf("INCOMING") }

@@ -33,7 +33,6 @@ fun BienvenidaPantalla(navController: NavController) {
         delay(2000) // Espera 2 segundos
         navController.navigate(Pantallas.Inventario.ruta) // Ir a Inicio
     }
-
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -44,7 +43,6 @@ fun BienvenidaPantalla(navController: NavController) {
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
-
         // 🔹 Contenedor del texto
         Box(
             modifier = Modifier

@@ -37,14 +37,12 @@ import com.redrd.inventario_app_movil.ui.theme.Sky
 fun NavegacionBotton(navController: NavController) {
 
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
-
     val screens = listOf(
         Pantallas.Inventario,
         Pantallas.Buscar,
         Pantallas.Reportes,
         Pantallas.Ajustes
     )
-
    if (currentRoute != Pantallas.Splash.ruta) {
        Box(
            modifier = Modifier
@@ -110,6 +108,7 @@ fun RowScope.BottomBarItem(
         )
     }
 }
+
 private fun menuBarShape() = GenericShape { size, _ ->
     reset()
 

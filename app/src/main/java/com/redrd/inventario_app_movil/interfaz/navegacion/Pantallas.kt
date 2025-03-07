@@ -12,4 +12,5 @@ sealed class Pantallas(val ruta: String, val icon: Int? = null) {
 
     object RegistroArtefacto: Pantallas("registroArtefacto_screen")
     object RegistroVehiculo: Pantallas("registroVehiculo_screen")
+
 }

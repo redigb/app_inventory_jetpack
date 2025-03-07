@@ -31,6 +31,7 @@ import com.redrd.inventario_app_movil.data.entidades.Artefacto
 import com.redrd.inventario_app_movil.data.entidades.Vehiculo
 import com.redrd.inventario_app_movil.interfaz.componentes.BotonEstilo
 import com.redrd.inventario_app_movil.interfaz.componentes.BotonGeneral
+import com.redrd.inventario_app_movil.interfaz.componentes.MyInputButtomSearch
 import com.redrd.inventario_app_movil.interfaz.componentes.TopBar
 import com.redrd.inventario_app_movil.interfaz.navegacion.Pantallas
 import com.redrd.inventario_app_movil.vistaModelo.InventarioVistaModel
@@ -54,12 +55,10 @@ fun BuscadorPantalla(navController: NavController, viewModel: InventarioVistaMod
     ) {
         TopBar( title = "Buscar en Inventario", isClickable = false)
 
-        OutlinedTextField(
-            value = codigo.value,
-            onValueChange = { codigo.value = it },
-            label = { Text("Buscar por nombre o codigo") },
-            modifier = Modifier.fillMaxWidth()
-        )
+        MyInputButtomSearch("", codigo,
+            "Buscar por nombre o codigo",
+            true,
+            "Escriba el nombre o codigo"){ }
         // Sección de Artefactos
         LazyVerticalGrid(
             columns = GridCells.Fixed(2), // 🔹 Organiza en dos columnas

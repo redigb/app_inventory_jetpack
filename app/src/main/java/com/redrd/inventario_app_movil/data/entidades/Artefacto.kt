@@ -3,6 +3,7 @@ package com.redrd.inventario_app_movil.data.entidades
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.Date
 
 @Entity(tableName = "artefactos")
 data class Artefacto(
@@ -13,5 +14,6 @@ data class Artefacto(
     val precioVenta: Double,
     val cantidad: Int,
     val fechaIngreso: String,
+    //val fecha: Date,
     val imagen: String? = null
 )

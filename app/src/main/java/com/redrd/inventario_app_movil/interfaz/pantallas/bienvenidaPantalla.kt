@@ -25,14 +25,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.redrd.inventario_app_movil.R
 import com.redrd.inventario_app_movil.interfaz.navegacion.Pantallas
-import com.redrd.inventario_app_movil.vistaModelo.InventarioVistaModel
 import kotlinx.coroutines.delay
 
 @Composable
 fun BienvenidaPantalla(navController: NavController) {
     LaunchedEffect(Unit) {
         delay(2000) // Espera 2 segundos
-        navController.navigate(Pantallas.Inicio.ruta) // Ir a Inicio
+        navController.navigate(Pantallas.Inventario.ruta) // Ir a Inicio
     }
 
     Box(

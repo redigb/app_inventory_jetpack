@@ -26,6 +26,8 @@ import androidx.navigation.NavController
 import com.redrd.inventario_app_movil.data.entidades.Artefacto
 import com.redrd.inventario_app_movil.interfaz.componentes.BotonEstilo
 import com.redrd.inventario_app_movil.interfaz.componentes.BotonGeneral
+import com.redrd.inventario_app_movil.interfaz.componentes.TopBar
+import com.redrd.inventario_app_movil.interfaz.navegacion.Pantallas
 import com.redrd.inventario_app_movil.vistaModelo.InventarioVistaModel
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -55,12 +57,9 @@ fun registroArtefacto(navController: NavController, viewModel: InventarioVistaMo
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "Registrar Artefacto",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
+        TopBar(title = "Registrar Artefacto", isClickable = true){
+            navController.navigate(Pantallas.Inventario.ruta)
+        }
 
         OutlinedTextField(
             value = nombre.value,

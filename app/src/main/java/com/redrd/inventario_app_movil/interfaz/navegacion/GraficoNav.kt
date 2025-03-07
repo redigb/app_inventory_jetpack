@@ -35,15 +35,13 @@ fun GraficoNavegacion(navController: NavHostController, paddingValues: PaddingVa
         composable(Pantallas.Splash.ruta) { BienvenidaPantalla(navController) }
 
         // Rutas principales
-        composable(Pantallas.Inicio.ruta) { InventarioPantalla(navController, viewModel) }
+        composable(Pantallas.Inventario.ruta) { InventarioPantalla(navController, viewModel) }
         // ---->  Ruta segundatia a la principal -- para registros
         composable(Pantallas.RegistroArtefacto.ruta) { registroArtefacto(navController, viewModel) }
         composable(Pantallas.RegistroVehiculo.ruta) { registroVehiculo(navController, viewModel) }
 
-
-        composable(Pantallas.Buscar.ruta) { BuscadorPantalla(navController) }
+        composable(Pantallas.Buscar.ruta) { BuscadorPantalla(navController, viewModel) }
         composable(Pantallas.Reportes.ruta) { ReportesPantalla(navController) }
         composable(Pantallas.Ajustes.ruta) { ConfiguracionPantalla(navController) }
-
     }
 }

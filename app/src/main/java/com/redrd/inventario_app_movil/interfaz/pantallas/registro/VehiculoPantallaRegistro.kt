@@ -30,6 +30,8 @@ import com.redrd.inventario_app_movil.data.entidades.Artefacto
 import com.redrd.inventario_app_movil.data.entidades.Vehiculo
 import com.redrd.inventario_app_movil.interfaz.componentes.BotonEstilo
 import com.redrd.inventario_app_movil.interfaz.componentes.BotonGeneral
+import com.redrd.inventario_app_movil.interfaz.componentes.TopBar
+import com.redrd.inventario_app_movil.interfaz.navegacion.Pantallas
 import com.redrd.inventario_app_movil.vistaModelo.InventarioVistaModel
 import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
@@ -61,12 +63,9 @@ fun registroVehiculo(navController: NavController, viewModel: InventarioVistaMod
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "Registrar Vehiculo",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
+        TopBar(title = "Registrar Vehiculo", isClickable = true) {
+            navController.navigate(Pantallas.Inventario.ruta)
+        }
 
         OutlinedTextField(
             value = nombre.value,
@@ -129,7 +128,7 @@ fun registroVehiculo(navController: NavController, viewModel: InventarioVistaMod
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        BotonGeneral("Guardar Vehiculo", BotonEstilo.BLACK){
+        BotonGeneral("Guardar Vehiculo", BotonEstilo.BLACK) {
             if (nombre.value.isNotBlank() && serieModelo.value.isNotBlank() && precioVenta.value.isNotBlank() && cantidad.value.isNotBlank()) {
                 val vehiculo = Vehiculo(
                     nombre = nombre.value,
@@ -145,7 +144,8 @@ fun registroVehiculo(navController: NavController, viewModel: InventarioVistaMod
                 Toast.makeText(contexto, "Vehiculo registrado", Toast.LENGTH_SHORT).show()
                 navController.popBackStack()
             } else {
-                Toast.makeText(contexto, "Todos los campos son obligatorios 😐", Toast.LENGTH_SHORT).show()
+                Toast.makeText(contexto, "Todos los campos son obligatorios", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }

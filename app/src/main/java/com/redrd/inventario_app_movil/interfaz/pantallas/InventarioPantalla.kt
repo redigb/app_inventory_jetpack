@@ -1,6 +1,7 @@
 package com.redrd.inventario_app_movil.interfaz.pantallas
 
 
+import android.util.Patterns
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -37,17 +38,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.redrd.inventario_app_movil.R
 import com.redrd.inventario_app_movil.data.Producto
 import com.redrd.inventario_app_movil.data.entidades.Artefacto
 import com.redrd.inventario_app_movil.data.entidades.Vehiculo
 import com.redrd.inventario_app_movil.interfaz.componentes.BotonEstilo
 import com.redrd.inventario_app_movil.interfaz.componentes.BotonGeneral
+import com.redrd.inventario_app_movil.interfaz.componentes.TopBar
 import com.redrd.inventario_app_movil.interfaz.navegacion.Pantallas
 import com.redrd.inventario_app_movil.vistaModelo.InventarioVistaModel
 
@@ -66,23 +71,8 @@ fun InventarioPantalla(navController: NavController, viewModel: InventarioVistaM
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Text(
-            text = "Inventario",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-        HorizontalDivider(
-            color = Color.Gray.copy(alpha = 0.2f),
-            thickness = 2.dp,
-            modifier = Modifier.fillMaxWidth()
-        )
-
-
+        TopBar( title = "Inventario", isClickable = false)
         // Sección de Artefactos
-
-
-
         LazyVerticalGrid(
             columns = GridCells.Fixed(2), // 🔹 Organiza en dos columnas
             modifier = Modifier
@@ -93,8 +83,6 @@ fun InventarioPantalla(navController: NavController, viewModel: InventarioVistaM
                 ProductoCard(producto)
             }
         }
-
-
 
         Spacer(modifier = Modifier.height(16.dp)) // 🔹 Agrega espacio antes de los botones
         Row(
@@ -116,8 +104,117 @@ fun InventarioPantalla(navController: NavController, viewModel: InventarioVistaM
             }
         }
     }
-
 }
+
+@Composable
+fun ProductoCard(producto: Producto) {
+    val isRandomLayout = remember { (0..1).random() == 1 } // Alternar entre diseños
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        elevation = CardDefaults.elevatedCardElevation(4.dp),
+        shape = RoundedCornerShape(8.dp)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            // Etiqueta del tipo de producto
+            Text(
+                text = if (producto is Producto.ArtefactoProducto) "Artefacto" else "Vehiculo",
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .background(Color.LightGray)
+                    .padding(4.dp)
+                    .clip(RoundedCornerShape(4.dp))
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+
+            if (isRandomLayout) {
+                // Diseño 1: Imagen primero, luego datos
+                ProductoImagen(producto.imagen)
+                Spacer(modifier = Modifier.height(8.dp))
+                ProductoInfo(producto)
+            } else {
+                // Diseño 2: Datos primero, luego imagen
+                ProductoInfo(producto)
+                Spacer(modifier = Modifier.height(8.dp))
+                ProductoImagen(producto.imagen)
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Acciones
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(text = "🛒", fontSize = 20.sp)
+                Text(text = "📦", fontSize = 20.sp)
+                Text(text = "📊", fontSize = 20.sp)
+            }
+        }
+    }
+}
+
+/*@Composable
+fun ProductoImagen(imagen: String?) {
+    Image(
+        painter = painterResource(id = R.drawable.placeholder),
+        contentDescription = "Imagen del producto",
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(100.dp)
+            .clip(RoundedCornerShape(8.dp)),
+        contentScale = ContentScale.Crop
+    )
+}*/
+
+@Composable
+fun ProductoImagen(imagen: String?) {
+    val context = LocalContext.current
+    val isValidUrl = remember(imagen) {
+        !imagen.isNullOrBlank() && Patterns.WEB_URL.matcher(imagen).matches()
+    }
+
+    if (isValidUrl) {
+        AsyncImage(
+            model = imagen,
+            contentDescription = "Imagen del producto",
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp)
+                .clip(RoundedCornerShape(8.dp)),
+            contentScale = ContentScale.Crop,
+            placeholder = painterResource(id = R.drawable.placeholder),
+            error = painterResource(id = R.drawable.placeholder)
+        )
+    } else {
+        Image(
+            painter = painterResource(id = R.drawable.placeholder),
+            contentDescription = "Imagen por defecto",
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp)
+                .clip(RoundedCornerShape(8.dp)),
+            contentScale = ContentScale.Crop
+        )
+    }
+}
+
+@Composable
+fun ProductoInfo(producto: Producto) {
+    Text(text = producto.nombre, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+    Text(text = "Stock: ${producto.cantidad} unidades", fontSize = 14.sp, color = Color.Gray)
+}
+
+
+/*@Composable
+fun ProductoImagen(imagen: String?) {
+    Image(
+        painter = painterResource(id = R.drawable.placeholder),
+        contentDescription = "Imagen del producto",
+
 
 @Composable
 fun ProductoCard(producto: Producto) {
@@ -160,9 +257,37 @@ fun ProductoCard(producto: Producto) {
             }
         }
     }
-}
+}*/
 
 @Composable
+fun obtenerProductosUnificados(
+    artefactos: List<Artefacto>,
+    vehiculos: List<Vehiculo>
+): List<Producto> {
+    return remember(artefactos, vehiculos) {
+        val artefactosMapped = artefactos.map { artefacto ->
+            Producto.ArtefactoProducto(
+                id = artefacto.id,
+                nombre = artefacto.nombre,
+                cantidad = artefacto.cantidad,
+                imagen = artefacto.imagen,
+                fechaIngreso = artefacto.fechaIngreso // Ahora usamos fechaIngreso
+            )
+        }
+        val vehiculosMapped = vehiculos.map { vehiculo ->
+            Producto.VehiculoProducto(
+                id = vehiculo.id,
+                nombre = vehiculo.nombre,
+                cantidad = vehiculo.cantidad,
+                imagen = vehiculo.imagen,
+                fechaIngreso = vehiculo.fechaIngreso // Ahora usamos fechaIngreso
+            )
+        }
+        (artefactosMapped + vehiculosMapped).sortedByDescending { it.id }
+    }
+}
+
+/*@Composable
 fun obtenerProductosUnificados(
     artefactos: List<Artefacto>,
     vehiculos: List<Vehiculo>
@@ -186,7 +311,7 @@ fun obtenerProductosUnificados(
         }
         artefactosMapped + vehiculosMapped
     }
-}
+}*/
 
 
 

@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.redrd.inventario_app_movil"
-        minSdk = 24
+        minSdk = 25
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.androidx.storage)
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.androidx.animation.core.android)
+    implementation(libs.androidx.compose.material)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -69,4 +70,7 @@ dependencies {
     implementation(libs.room.ktx)
     kapt(libs.room.compiler) // Para anotaciones
     implementation(libs.androidx.core.splashscreen)
+
+    // MAnejo de estados
+    implementation(libs.coil.compose)
 }

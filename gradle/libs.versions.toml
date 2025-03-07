@@ -17,6 +17,8 @@ room = "2.6.1"
 runtimeLivedata = "1.7.8"
 animationCoreAndroid = "1.6.6"
 coreSplashscreen = "1.0.1"
+composeMaterial = "1.4.1"
+composeKoil = "2.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -44,7 +46,9 @@ room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
 androidx-animation-core-android = { group = "androidx.compose.animation", name = "animation-core-android", version.ref = "animationCoreAndroid" }
+androidx-compose-material = { group = "androidx.wear.compose", name = "compose-material", version.ref = "composeMaterial" }
 
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "composeKoil" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

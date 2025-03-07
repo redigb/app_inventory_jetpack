@@ -80,7 +80,7 @@ fun ViewButtoms(){
 
 fun pantallasToButtons(): List<ButtonData> {
     return listOf(
-        Pantallas.Inicio,
+        Pantallas.Inventario,
         Pantallas.Buscar,
         Pantallas.Reportes,
         Pantallas.Ajustes
@@ -104,6 +104,7 @@ fun getIcon(iconRes: Int): ImageVector {
         else -> Icons.Default.Home // Ícono por defecto en caso de error
     }
 }
+
 
 @Composable
 fun AnimatedNavigationBar(
